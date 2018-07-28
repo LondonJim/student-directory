@@ -9,7 +9,7 @@ def input_students
   while !name.empty? do
     # adding the student hash to the students array
     students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    puts "#{name} entered, now we have #{students.count} students"
     name = gets.chomp
   end
   # return the students array
@@ -17,19 +17,45 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villians Academy"
-  puts "-------------"
+  header = "The students of Villians Academy"
+  puts header
+  puts "-------------".center(header.length) #centre the line to 'header' variable
 end
+
 def print(students)
-  students.each do |student|
-  puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index do |student, index|
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
+
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great student#{'s' if (names.count > 1)}"
+  puts ""
 end
-# call the methods
-students = input_students
-print_header
-print(students)
-print_footer(students)
+
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+
+    selection = gets.chomp
+    puts ""
+
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print(students)
+        print_footer(students)
+      when "9"
+        exit
+      else
+        puts "I don't know what you meant, try again"
+    end
+  end
+end
+
+interactive_menu

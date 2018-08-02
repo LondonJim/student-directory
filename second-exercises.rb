@@ -56,7 +56,7 @@ def input_students
   name = STDIN.gets.chomp
 
   while !name.empty? do
-    add_students_array(name, "august")
+    @students << {name: name, cohort: :august}
     puts "#{name} entered, now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
@@ -89,7 +89,6 @@ def save_students
   CSV.open("./#{@filename}", "wb") do |csv| #using CSV Class to save
     @students.each do |student|
       student_data = [student[:name], student[:cohort].to_s]
-      print student_data
       csv << student_data
     end
   end
@@ -114,10 +113,6 @@ def loading_file
     puts ""
     @filename = "students.csv"
   end
-end
-
-def add_students_array(name, cohort)
-  @students << {name: name, cohort: cohort.to_sym}
 end
 
 def work_file

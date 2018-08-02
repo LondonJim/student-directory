@@ -1,4 +1,11 @@
+require 'csv'
+
 @students = []
+
+def try_load_students
+  @filename = ARGV.first
+  loading_file
+end
 
 def print_menu
   puts "***Current work file: #{@filename}***"
@@ -79,28 +86,20 @@ def print_footer
 end
 
 def save_students
-  File.open(@filename, "w") do |file|
+  CSV.open(@filename, "wb") do |csv| #using CSV Class to save
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << student_data.join(",")
     end
   end
 end
 
 def load_students
   @students = [] # reset array ready for file data
-  File.open(@filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_students_array(name, cohort)
-    end
+  CSV.foreach(@filename) do |line| # Use the CSV Class to load line by line
+    name = line[0]; cohort = line[1]
+    add_students_array(name, cohort)
   end
-end
-
-def try_load_students
-  @filename = ARGV.first
-  loading_file
 end
 
 def loading_file

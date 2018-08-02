@@ -44,7 +44,10 @@ def print_by_month(students)
   month_list = []
   students.map { |individual| individual.each { |key, value| month_list << value if key == :cohort }}
   month_list= month_list.uniq
-  month_list.each { |month| puts month.capitalize; students.each { |find| puts find[:name] if find[:cohort] == month}; puts ""}
+  month_list.each { |month| puts month.capitalize
+    students.each { |find| puts find[:name] if find[:cohort] == month};
+    puts ""
+    }
 #  month_list.each do |month|
 #    students.
   puts ""
@@ -72,9 +75,6 @@ def print_footer(names)
   # adds an 's' to students of name count is larger than 1
   puts "Overall, we have #{names.count} great student#{'s' if (names.count > 1)}"
 end
-
-
-
 # call the methods
 students = input_students
 print_header

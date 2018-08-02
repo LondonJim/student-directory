@@ -86,7 +86,7 @@ def print_footer
 end
 
 def save_students
-  CSV.open(@filename, "wb") do |csv| #using CSV Class to save
+  CSV.open("./#{@filename}", "wb") do |csv| #using CSV Class to save
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
       csv << student_data.join(",")
@@ -96,7 +96,7 @@ end
 
 def load_students
   @students = [] # reset array ready for file data
-  CSV.foreach(@filename) do |line| # Use the CSV Class to load line by line
+  CSV.foreach("./#{@filename}") do |line| # Use the CSV Class to load line by line
     name = line[0]; cohort = line[1]
     add_students_array(name, cohort)
   end
